@@ -18,6 +18,7 @@ set(HEADERS
 
 # テクスチャファイルなど
 set(TEXTURE_FILES
+    "dot.raw"
     "paraboloid1.raw"
     "paraboloid2.raw"
 )
