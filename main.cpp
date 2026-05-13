@@ -62,6 +62,9 @@ static void init()
   /* テクスチャの境界色 */
   static const GLfloat border[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
+  /* テクスチャの混合比 */
+  static const GLfloat blend[] = { 1.0f, 1.0f, 1.0f, 0.5f };
+
 #if defined(_WIN32)
   glActiveTexture =
     (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
@@ -71,9 +74,9 @@ static void init()
   GLuint texname[3];
   glGenTextures(3, texname);
 
-  /* ３つ目のテクスチャユニットには２次元テクスチャを割り当てる */
-  glActiveTexture(GL_TEXTURE2);
-  glBindTexture(GL_TEXTURE_2D, texname[2]);
+  /* １つ目のテクスチャユニットには２次元テクスチャを割り当てる */
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, texname[0]);
 
   /* テクスチャの割り当て */
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXWIDTH, TEXHEIGHT, 0,
@@ -87,12 +90,12 @@ static void init()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-  /* テクスチャユニット２のテクスチャ環境 */
+  /* テクスチャユニット０のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-  /* １つ目のテクスチャユニットには裏面の放物面テクスチャを割り当てる */
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, texname[0]);
+  /* ２つ目のテクスチャユニットには裏面の放物面テクスチャを割り当てる */
+  glActiveTexture(GL_TEXTURE1);
+  glBindTexture(GL_TEXTURE_2D, texname[1]);
 
   /* テクスチャ画像の読み込み */
   if ((fp = fopen("paraboloid1.raw", "rb")) != NULL) {
@@ -115,7 +118,7 @@ static void init()
   /* テクスチャの境界色を黒にする */
   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 
-  /* テクスチャユニット０のテクスチャ環境 */
+  /* テクスチャユニット１のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
   /* 反射ベクトルをテクスチャ座標として使う */
@@ -134,9 +137,9 @@ static void init()
   glLoadMatrixd(mat1);
   glMatrixMode(GL_MODELVIEW);
 
-  /* ２つ目のテクスチャユニットには表面の放物面テクスチャを割り当てる */
-  glActiveTexture(GL_TEXTURE1);
-  glBindTexture(GL_TEXTURE_2D, texname[1]);
+  /* ３つ目のテクスチャユニットには表面の放物面テクスチャを割り当てる */
+  glActiveTexture(GL_TEXTURE2);
+  glBindTexture(GL_TEXTURE_2D, texname[2]);
 
   /* テクスチャ画像の読み込み */
   if ((fp = fopen("paraboloid2.raw", "rb")) != NULL) {
@@ -159,7 +162,7 @@ static void init()
   /* テクスチャの境界色を黒にする */
   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 
-  /* テクスチャユニット１のテクスチャ環境 */
+  /* テクスチャユニット２のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
   /* 反射ベクトルをテクスチャ座標として使う */
@@ -177,7 +180,6 @@ static void init()
   };
   glLoadMatrixd(mat2);
   glMatrixMode(GL_MODELVIEW);
-
 
   /* 初期設定 */
   glClearColor(0.3f, 0.3f, 1.0f, 0.0f);
@@ -202,29 +204,23 @@ static void scene()
   /* 材質の設定 */
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
 
-  /* テクスチャユニット０をアクティブにする */
+  /* 下地のテクスチャマッピング開始 */
   glActiveTexture(GL_TEXTURE0);
-
-  /* テクスチャマッピング開始 */
-  //glEnable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_GEN_S);
-  glEnable(GL_TEXTURE_GEN_T);
-  glEnable(GL_TEXTURE_GEN_R);
-
-  /* テクスチャユニット１をアクティブにする */
-  glActiveTexture(GL_TEXTURE1);
-
-  /* テクスチャマッピング開始 */
-  //glEnable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_GEN_S);
-  glEnable(GL_TEXTURE_GEN_T);
-  glEnable(GL_TEXTURE_GEN_R);
-
-  /* テクスチャユニット２をアクティブにする */
-  glActiveTexture(GL_TEXTURE2);
-
-  /* テクスチャマッピング開始 */
   glEnable(GL_TEXTURE_2D);
+
+  /* 裏面のテクスチャマッピング開始 */
+  glActiveTexture(GL_TEXTURE1);
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_TEXTURE_GEN_S);
+  glEnable(GL_TEXTURE_GEN_T);
+  glEnable(GL_TEXTURE_GEN_R);
+
+  /* 表面のテクスチャマッピング開始 */
+  glActiveTexture(GL_TEXTURE2);
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_TEXTURE_GEN_S);
+  glEnable(GL_TEXTURE_GEN_T);
+  glEnable(GL_TEXTURE_GEN_R);
 
   /* トラックボール処理による回転 */
   glMultMatrixd(trackballRotation());
@@ -238,24 +234,22 @@ static void scene()
   //glutSolidTorus(0.5, 1.0, 32, 64);
 #endif
 
-  /* 表面の放物面テクスチャのマッピング終了 */
+  /* 表面のテクスチャマッピング終了 */
+  glActiveTexture(GL_TEXTURE2);
+  glDisable(GL_TEXTURE_GEN_S);
+  glDisable(GL_TEXTURE_GEN_T);
+  glDisable(GL_TEXTURE_GEN_R);
+  glDisable(GL_TEXTURE_2D);
+
+  /* 裏面のテクスチャマッピング終了 */
   glActiveTexture(GL_TEXTURE1);
   glDisable(GL_TEXTURE_GEN_S);
   glDisable(GL_TEXTURE_GEN_T);
   glDisable(GL_TEXTURE_GEN_R);
   glDisable(GL_TEXTURE_2D);
 
-  /* 裏面の放物面テクスチャのマッピング終了 */
+  /* 下地のテクスチャマッピング終了 */
   glActiveTexture(GL_TEXTURE0);
-  glDisable(GL_TEXTURE_GEN_S);
-  glDisable(GL_TEXTURE_GEN_T);
-  glDisable(GL_TEXTURE_GEN_R);
-  glDisable(GL_TEXTURE_2D);
-
-  /* テクスチャユニット２に戻す */
-  glActiveTexture(GL_TEXTURE2);
-
-  /* テクスチャマッピング終了 */
   glDisable(GL_TEXTURE_2D);
 }
 
