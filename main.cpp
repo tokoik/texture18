@@ -202,7 +202,7 @@ static void scene()
   /* 材質の設定 */
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
 
-  /* テクスチャユニット０を有効にする */
+  /* テクスチャユニット０をアクティブにする */
   glActiveTexture(GL_TEXTURE0);
 
   /* テクスチャマッピング開始 */
@@ -211,7 +211,7 @@ static void scene()
   glEnable(GL_TEXTURE_GEN_T);
   glEnable(GL_TEXTURE_GEN_R);
 
-  /* テクスチャユニット１を有効にする */
+  /* テクスチャユニット１をアクティブにする */
   glActiveTexture(GL_TEXTURE1);
 
   /* テクスチャマッピング開始 */
@@ -220,7 +220,7 @@ static void scene()
   glEnable(GL_TEXTURE_GEN_T);
   glEnable(GL_TEXTURE_GEN_R);
 
-  /* テクスチャユニット２を有効にする */
+  /* テクスチャユニット２をアクティブにする */
   glActiveTexture(GL_TEXTURE2);
 
   /* テクスチャマッピング開始 */
