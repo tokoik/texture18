@@ -62,9 +62,6 @@ static void init()
   /* テクスチャの境界色 */
   static const GLfloat border[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-  /* テクスチャの混合比 */
-  static const GLfloat blend[] = { 1.0f, 1.0f, 1.0f, 0.5f };
-
 #if defined(_WIN32)
   glActiveTexture =
     (PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture");
@@ -74,7 +71,7 @@ static void init()
   GLuint texname[3];
   glGenTextures(3, texname);
 
-  /* １つ目のテクスチャユニットには２次元テクスチャを割り当てる */
+  /* １つ目のテクスチャユニットには下地のテクスチャを割り当てる */
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texname[0]);
 
@@ -90,7 +87,7 @@ static void init()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-  /* テクスチャユニット０のテクスチャ環境 */
+  /* 下地のテクスチャののテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
   /* ２つ目のテクスチャユニットには裏面の放物面テクスチャを割り当てる */
@@ -118,7 +115,7 @@ static void init()
   /* テクスチャの境界色を黒にする */
   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 
-  /* テクスチャユニット１のテクスチャ環境 */
+  /* 裏面のテクスチャのテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
   /* 反射ベクトルをテクスチャ座標として使う */
@@ -162,7 +159,7 @@ static void init()
   /* テクスチャの境界色を黒にする */
   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 
-  /* テクスチャユニット２のテクスチャ環境 */
+  /* 表面のテクスチャのテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
   /* 反射ベクトルをテクスチャ座標として使う */
