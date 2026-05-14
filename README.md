@@ -17,11 +17,11 @@
 1. コマンドプロンプトまたは PowerShell を開き、このプロジェクトのディレクトリに移動します。
 2. 以下のコマンドを実行してビルドディレクトリを作成し、CMake で構成を行います。
 
-```bat
-mkdir build
-cd build
-cmake .. -G "Visual Studio 17 2022"
-```
+   ```bat
+   mkdir build
+   cd build
+   cmake .. -G "Visual Studio 17 2022"
+   ```
 
 3. 生成された build フォルダ内の texture18.sln を Visual Studio で開きます。
 4. ソリューションエクスプローラーで texture18 プロジェクトを右クリックし、「スタートアップ プロジェクトに設定」を選択します。
@@ -32,11 +32,11 @@ cmake .. -G "Visual Studio 17 2022"
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
 2. 以下のコマンドを実行してビルドディレクトリを作成し、Xcode 用のプロジェクトを生成します。
 
-```sh
-mkdir build
-cd build
-cmake .. -G Xcode
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake .. -G Xcode
+   ```
 
 3. 生成された build/texture18.xcodeproj を Xcode で開きます。
 4. 左上のスキーム選択（再生ボタンの横）が texture18 になっていることを確認します。
@@ -47,12 +47,12 @@ cmake .. -G Xcode
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
 2. 必要なパッケージ（freeglut3-dev や pkg-config など）がインストールされていることを確認し、以下のコマンドでビルドします。
 
-```sh
-mkdir build
-cd build
-cmake ..
-make
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
 
 ## 3. 使い方
 
@@ -64,10 +64,10 @@ make
 
   Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
 
-```cmd
-cd build\Debug
-texture18.exe
-```
+  ```cmd
+  cd build\Debug
+  texture18.exe
+  ```
 
 - **macOS**
 
@@ -75,12 +75,12 @@ texture18.exe
 
 - **Ubuntu Linux**
 
-ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
+  ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
 
-```sh
-cd build
-./texture18
-```
+  ```sh
+  cd build
+  ./texture18
+  ```
 
 ### 3.2 操作方法
 
